@@ -1,0 +1,9 @@
+Steps To Create 'View Oppurnities' Button
+Step 1: Make sure you have the proper permissions to create a custom button in Salesforce
+Step 2: Next navigate to Setup > Customize > Select Account > Buttons, Links, and Actions.
+Step 3: Click to 'New Buttons or Link'.
+Step 4: Add the button label and name (View Oppurnities).
+Step 5: Click the Detail Page Button radio button.
+Step 6: Select Display in existing window without sidebar or header (Depends on Requirement) as the Behavior and  Visualforce 	Page as Content Source respectively.
+Step 7: Selet Content as 'ViewOpportunities' from List of visualforce page List
+Step 8: Then add the custom button In Account Page Layout 
