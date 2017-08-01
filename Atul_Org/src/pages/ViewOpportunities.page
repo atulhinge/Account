@@ -1,0 +1,73 @@
+<apex:page standardController="Account" extensions="ViewOpportunitunitiesExtension" sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:image url="/img/seasonLogos/Summer_17_175x65.png"/>
+        <apex:outputText value="Welcome {!Account.Name}" style="float:right;padding-top: 2%;"> </apex:outputText>
+        <apex:pageBlock title="Account Details" >
+            <!--Account Detail View-->
+            <apex:pageBlockSection >
+                <apex:outputField value="{!Account.Owner.Name}"/>
+                <apex:outputField Value="{!Account.Name}"/>
+                <apex:outputField value="{!Account.AccountNumber}"/>
+                <apex:outputPanel >
+                    <table Style="Width:100%;">
+                        <tr>
+                            <td Class="labelCol vfLabelColTextWrap "  Style="Width:35%;">
+                                Billing Address
+                            </td>
+                            <td>
+                                <apex:outputPanel >
+                                    <apex:outputText value="{!Account.BillingCountry}" /><br />
+                                    <apex:outputText value="{!Account.BillingPostalCode}" />&nbsp;
+                                    <apex:outputText value="{!Account.BillingState}" />&nbsp;
+                                    <apex:outputText value="{!Account.BillingCity}" />&nbsp;<br />
+                                    <apex:outputText value="{!Account.BillingStreet}" />
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+                <apex:outputField Value="{!Account.Phone}"/>
+                <apex:outputField value="{!Account.AnnualRevenue}"/>
+            </apex:pageBlockSection>
+             <!--Opportunity List View-->
+            
+            <apex:outputPanel id="OpportunityListView" >
+                <apex:pageBlockSection collapsible="true" title="Opportunities" columns="1">
+                    <apex:outputPanel id="OpportunityView">
+                        <apex:outputPanel id="OpportunityDetailView" rendered="{!If($CurrentPage.parameters.viewOppId =='Null' ,false,true)}">
+                            <apex:commandLink value="Back" title="Back" rerender="OpportunityView" onclick="window.location.reload();" rendered="{!If($CurrentPage.parameters.viewOppId =='' ,false,true)}"/>
+                            <!--Opportunity Detail View rerender wher click on view link -->
+                            <apex:detail subject="{!$CurrentPage.parameters.viewOppId}" relatedList="false"/>
+                        </apex:outputPanel>
+                        <apex:pageBlockTable value="{!Account.Opportunities}" var="Opportunity" >
+                            <apex:column headerValue="Name">{!Opportunity.Name}</apex:column>
+                            <apex:column headerValue="Opportunity Name">
+                                {!Opportunity.Name}
+                            </apex:column>
+                            <apex:column headerValue="Type">
+                                {!Opportunity.Type}</apex:column>
+                            <apex:column headerValue="Amount">
+                                {!Opportunity.Amount}</apex:column>
+                            <apex:column headerValue="Stage">
+                                {!Opportunity.StageName}</apex:column>
+                            <apex:column headerValue="View">
+                                <!--Opportunity Detail View Link -->
+                                <apex:commandLink value="View" title="View Detail" rerender="OpportunityDetailView" >
+                                    <apex:param name="viewOppId" value="{!Opportunity.Id}" assignTo="{!viewOppId}"/>
+                                </apex:commandLink>
+                                
+                            </apex:column>
+                            <apex:column headerValue="Delete">
+                                <!--Opportunity Delete Link -->
+                                <apex:commandLink value="Delete" action="{!deleteOpportunitunity}" oncomplete="window.location.reload()"> 
+                                    <apex:param name="delOppId" value="{!Opportunity.Id}" assignTo="{!delOppId}"/>
+                                </apex:commandLink>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
